@@ -1,0 +1,8 @@
+parameters,prior,initial_guess,prior1,prior2
+age,uniform,120,15,500
+jitter_li,uniform,0.001,0.0001,0.01
+jitter_rotp,uniform,0.001,0.0001,0.1
+a,uniform,0.407,0.386,0.428
+b,uniform,0.325,0.301,0.349
+c,uniform,0.495,0.485,0.505
+n,uniform,0.566,0.558,0.574
