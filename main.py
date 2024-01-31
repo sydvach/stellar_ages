@@ -13,7 +13,9 @@ def load_priors(file_path):
 #    print(priors)
     return labels, theta0, priors
 
-tab = pd.read_csv('~/Research/unisq/TOI5358/gyro_stars.csv')
+# Bouma+2023 gyro relations are tuned for >3800K and 0.8Gyr to 2.6 Gyr
+# Mamajek&Hillenbrand (2008) are tuned for B-V 
+tab = pd.read_csv('gyro_stars.csv')
 rotations = tab[tab.prot > 0.5] 
 rotations = rotations[rotations.prot < 12] 
 rotations = rotations[rotations.teff < 6500]
@@ -26,7 +28,7 @@ rotations.prot = rotations.prot.values.astype(float)
 
 labels,theta,priors=load_priors('priors.csv')
 
-li = pd.read_csv('/Users/u1147646/Downloads/li_tres_ew.csv')
+li = pd.read_csv('li_tres_ew.csv')
 pl_li = li[li.assoc2 == 'pleiades']
 th_li = li[~li.tic.isin(pl_li.tic.values)]
 th_li = th_li[th_li.assoc == 'theia369']
@@ -34,14 +36,7 @@ th_li = th_li[th_li.assoc == 'theia369']
 th_li = th_li.sort_values('teff')
 th_li = th_li[th_li.teff < 6500]
 th_li = th_li[th_li.teff > 3000]
-print(th_li.teff, -th_li.ew * 1000, th_li.ew_err * 1000)
-print(th_li.columns)
 
-# csv2 = th_li.loc[:, ['tic', 'teff', 'ew', 'ew_err']]
-# csv2.ew = csv2.ew.values * -1000
-# csv2.ew_err = csv2.ew_err * 1000
-# csv2.to_csv('input.dat', index=False)
-# b = c
 
 cluster = fitStellarCluster(labels, priors, \
                             measured_rotations = rotations.prot.values, \
